@@ -11,7 +11,7 @@ const utils = require("./utils");
 const { sign, verify } = require("jsonwebtoken");
 const SECRET = "poiugyfguhijokpkoihugyfyguhijo";
 
-const whitelist = ['http://localhost:3000', 'http://localhost:5000'];
+const whitelist = ['http://localhost:3000', 'http://localhost:5000', ['https://reactauthentication.herokuapp.com']];
 const corsOptions = {
   credentials: true, // This is important.
   origin: (origin, callback) => {
