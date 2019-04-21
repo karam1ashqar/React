@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const morgan = require('morgan');
+const compression = require('compression');
 const port = process.env.PORT || 5000;
 const getBooks = require("./queries/getBooks");
 const createUser = require("./queries/createUser");
@@ -11,18 +13,27 @@ const utils = require("./utils");
 const { sign, verify } = require("jsonwebtoken");
 const SECRET = "poiugyfguhijokpkoihugyfyguhijo";
 
-const whitelist = ['http://localhost:3000', `http://localhost:${process.env.PORT}`, 'http://172.18.96.174:10163', 'http://localhost:5000', 'https://reactauthentication.herokuapp.com'];
-const corsOptions = {
-  credentials: true, // This is important.
-  origin: (origin, callback) => {
-    if(whitelist.includes(origin))
-      return callback(null, true)
+// const whitelist = ['http://localhost:3000', `http://localhost:${process.env.PORT}`, 'http://172.18.96.174:10163', 'http://localhost:5000', 'https://reactauthentication.herokuapp.com'];
+// const corsOptions = {
+//   credentials: true, // This is important.
+//   origin: (origin, callback) => {
+//     if(whitelist.includes(origin))
+//       return callback(null, true)
+//
+//       callback(new Error('Not allowed by CORS'));
+//   }
+// }
+app.disable('x-powered-by');
+app.use(compression())
+app.use(morgan('common'))
+// app.use(cors(corsOptions));
 
-      callback(new Error('Not allowed by CORS'));
-  }
-}
 
-app.use(cors(corsOptions));
+app.use(express.static(path.resolve(__dirname,  "..", "public")))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, "..",  'public', 'index.html'))
+})
 
 app.get("/get", (req, res) => {
   getBooks((err, result) => {

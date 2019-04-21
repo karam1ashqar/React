@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../Styles/myStyles.css";
 import * as axios from 'axios';
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 
 class Title extends Component {
