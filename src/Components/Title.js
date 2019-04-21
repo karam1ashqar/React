@@ -68,7 +68,7 @@ class Title extends Component {
 
       if (this.state.gotopage === "Need an account? Sign up") {
         axios
-          .post(`http://localhost:5000/login`, { username, password })
+          .post(`/login`, { username, password })
           .then(res => {
             this.setState({
               handlingForm: `${res.data}`,
@@ -83,7 +83,7 @@ class Title extends Component {
           .catch(err => console.log(err));
       } else {
         axios
-          .post(`http://localhost:5000/createUser`, {
+          .post(`/createUser`, {
             fullname,
             password,
             username
