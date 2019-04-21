@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./Styles/myStyles.css";
+
 import Title from "./Components/Title";
 import axios from "axios";
 
@@ -7,6 +9,8 @@ class App extends Component {
   state = {
     response: "",
     post: "",
+    log: "none",
+    gol: "block",
     responseToPost: ""
   };
   componentDidMount() {
@@ -14,6 +18,18 @@ class App extends Component {
     //   .then(res => res.text())
     //   .then(res => this.setState({ response: res }))
     //   .catch( err => console.log(err))
+
+    axios
+      .get("http://localhost:5000/checkauthen")
+      .then(res => {
+        if( res.data === "logged_in")
+          this.setState({log:"block", gol:"none"});
+         else
+              this.setState({log:"none", gol:"block"});
+}
+      )
+      .catch(err => console.log(err));
+
 
     axios
       .get("http://localhost:5000/get")
@@ -46,11 +62,21 @@ class App extends Component {
     return table;
   };
 
+  changeFirst = () => {
+    this.setState({
+      log: "block"
+    });
+  }
+
   render() {
     return (
       <div>
-        <Title />
-        <div style={{display: 'none'}}>
+        <h1 className="webTitle">PostIt - AuthenticateReactSQL</h1>
+
+        <div style={{display: this.state.gol}}>
+        <Title changeFirst={this.changeFirst.bind(this)} />
+        </div>
+        <div style={{display: this.state.log}}>
         {this.createTable()}
         </div>
       </div>
