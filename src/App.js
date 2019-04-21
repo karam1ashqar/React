@@ -20,7 +20,7 @@ class App extends Component {
     //   .catch( err => console.log(err))
 
     axios
-      .get("http://localhost:5000/checkauthen")
+      .get("/checkauthen")
       .then(res => {
         if( res.data === "logged_in")
           this.setState({log:"block", gol:"none"});
@@ -32,7 +32,7 @@ class App extends Component {
 
 
     axios
-      .get("http://localhost:5000/get")
+      .get("/get")
       .then(res =>
         this.setState({ response: JSON.parse(JSON.stringify(res.data)) })
       )
