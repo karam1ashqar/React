@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "../Styles/myStyles.css";
-import axios from "axios";
+import * as axios from 'axios';
+axios.defaults.withCredentials = true;
+
 
 class Title extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Title extends Component {
       password: "",
       fullname: "",
       regstyle: "none",
+      log: "block",
       color: "black",
       buttonTxt: "Log in",
       handlingForm: "Log in to access this website",
@@ -39,19 +42,27 @@ class Title extends Component {
   handleSubmitForm = event => {
     event.preventDefault();
 
-    if (this.state.password && this.state.username) {
-      if (this.state.password.length < 6)
-        return this.setState({ handlingForm: "Short Password!", style: "red" });
-      if (!/\d/.test(this.state.password))
-        return this.setState({
-          handlingForm: "Password must include at least one number!",
-          style: "red"
-        });
-      if (/^\d+$/.test(this.state.password))
-        return this.setState({
-          handlingForm: "Password must include at least one char!",
-          style: "red"
-        });
+
+    if (this.state.gotopage === "Log in") {
+
+      if (this.state.password && this.state.username) {
+        if (this.state.password.length < 6)
+          return this.setState({
+            handlingForm: "Short Password!",
+            style: "red"
+          });
+        if (!/\d/.test(this.state.password))
+          return this.setState({
+            handlingForm: "Password must include at least one number!",
+            style: "red"
+          });
+        if (/^\d+$/.test(this.state.password))
+          return this.setState({
+            handlingForm: "Password must include at least one char!",
+            style: "red"
+          });
+}
+}
 
       const { username, password, fullname } = this.state;
 
@@ -63,8 +74,11 @@ class Title extends Component {
               handlingForm: `${res.data}`,
               style: res.data === "Logged in successfully" ? "green" : "red"
             });
-
-            //  console.log(res.data);
+            if( res.data === "Logged in successfully" )
+            setTimeout(function() {
+              this.setState({ log: res.data === "Logged in successfully" ? "none" : "block"})
+            this.props.changeFirst()
+            }.bind(this), 1500)
           })
           .catch(err => console.log(err));
       } else {
@@ -81,17 +95,25 @@ class Title extends Component {
                 handlingForm: "Username already exists!",
                 style: "red"
               });
-            else
+            else if (data === "Logged in successfully!") {
               this.setState({
                 handlingForm: "Signed up successfully",
                 style: "green"
               });
-
-            //  console.log(res.data);
+              setTimeout(function() {
+                console.log('hey im here');
+                this.setState({ log: "none"})
+              }, 1500)
+            }
+            else
+              this.setState({
+                handlingForm: "Error",
+                style: "red"
+              });
           })
           .catch(err => console.log(err));
       }
-    }
+
   };
 
   SignUpRender = () => {
@@ -99,13 +121,17 @@ class Title extends Component {
       this.setState({
         gotopage: "Log in",
         regstyle: "block",
-        buttonTxt: "Sign up"
+        buttonTxt: "Sign up",
+        username: "",
+        password: ""
       });
     } else {
       this.setState({
         gotopage: "Need an account? Sign up",
         regstyle: "none",
-        buttonTxt: "Log in"
+        buttonTxt: "Log in",
+        username: "",
+        password: ""
       });
     }
   };
@@ -113,8 +139,7 @@ class Title extends Component {
   render() {
     const { username, password, fullname } = this.state;
     return (
-      <div>
-        <h1 className="webTitle">PostIt - AuthenticateReactSQL</h1>
+      <div style={{display: this.state.log}}>
         <div className="abc">
           <form onSubmit={this.handleSubmitForm}>
             <div className="InputsLabelsContainer">
