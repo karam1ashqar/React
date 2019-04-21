@@ -1,6 +1,6 @@
-# BooksPostgresSQL
+# ReactBooksPostgresSQL
 
-[Link to our application](https://bookspostgresql.herokuapp.com/)
+[Link to our application](https://reactauthentication.herokuapp.com/) -- Reading data is not working currently, please clone locally
 
 ### What ?
 
@@ -18,7 +18,7 @@ for you a username that has your name
 1. git clone this repo.
 2. git install, if something was missing, please install manually to your machine, reactjs, axios, jsonwebtoken,  nodemon.
 3. for nyc tests, nyc npm test.
-4. to deploy the server, we made an easy script for you, just type in your terminal 'npm run connect', and it will be deployed with nodemon, if you with to deploy without nodemon, just type in 'run start'.
+4. to deploy the server, we made an easy script for you, just type in your terminal 'npm run connect' and 'npm start', and it will be deployed with nodemon.
 5. Have fun!
 
 ### Main goals
