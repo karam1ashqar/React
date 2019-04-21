@@ -7,7 +7,6 @@ const userExsit = (username, cb) => {
     (err, result) => {
       if (err) cb(err);
       else {
-        console.log(result);
         if (result.rowCount !== 0) {
           cb(null, true);
         } else {
