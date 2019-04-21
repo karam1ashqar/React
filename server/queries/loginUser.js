@@ -7,10 +7,13 @@ const loginUser = (username, password, cb) => {
     (err, result) => {
       if (err) cb(err);
       else {
+        if( result.rows[0] ) {
         bcrypt.compare(password, result.rows[0].password, function(err, res) {
           if (err) console.log("error");
           cb(null, res);
         });
+      }
+      else cb(null, false);
       }
     }
   );
