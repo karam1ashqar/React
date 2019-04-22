@@ -13,26 +13,13 @@ const utils = require("./utils");
 const { sign, verify } = require("jsonwebtoken");
 const SECRET = "poiugyfguhijokpkoihugyfyguhijo";
 
-// const whitelist = ['http://localhost:3000', `http://localhost:${process.env.PORT}`, 'http://172.18.96.174:10163', 'http://localhost:5000', 'https://reactauthentication.herokuapp.com'];
-// const corsOptions = {
-//   credentials: true, // This is important.
-//   origin: (origin, callback) => {
-//     if(whitelist.includes(origin))
-//       return callback(null, true)
+
+// app.use(cors());
 //
-//       callback(new Error('Not allowed by CORS'));
-//   }
-// }
-app.disable('x-powered-by');
-app.use(compression())
-app.use(morgan('common'))
-// app.use(cors(corsOptions));
-
-
-app.use(express.static(path.resolve(__dirname,  "..", "public")))
+app.use(express.static(path.resolve(__dirname,  "build")))
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, "..",  'public', 'index.html'))
+  res.sendFile(path.resolve(__dirname,  '..', 'public', 'index.html'))
 })
 
 app.get("/get", (req, res) => {
