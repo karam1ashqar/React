@@ -1,6 +1,8 @@
 {
   "name": "app",
   "version": "0.1.0",
+  "proxy": "http://localhost:5000",
+  "homepage": "https://reactauthentication.herokuapp.com",
   "dependencies": {
     "axios": "^0.18.0",
     "compression": "^1.7.4",
@@ -14,8 +16,9 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "connect": "nodemon server/server.js",
+    "heroku-postbuild": "npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
