@@ -1,8 +1,7 @@
 {
   "name": "app",
   "version": "0.1.0",
-  "proxy": "http://localhost:5000",
-  "homepage": "https://reactauthentication.herokuapp.com",
+  "proxy": "http://localhost:",
   "dependencies": {
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",

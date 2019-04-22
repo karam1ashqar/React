@@ -4,7 +4,7 @@ const path = require("path");
 const app = express();
 // const morgan = require('morgan');
 // const compression = require('compression');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5020;
 const getBooks = require("./queries/getBooks");
 const createUser = require("./queries/createUser");
 const loginUser = require("./queries/loginUser");
@@ -14,13 +14,9 @@ const { sign, verify } = require("jsonwebtoken");
 const SECRET = "poiugyfguhijokpkoihugyfyguhijo";
 
 
-// app.use(cors());
+app.use(cors());
 //
-app.use(express.static(path.resolve(__dirname,  "build")))
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname,  '..', 'public', 'index.html'))
-})
 
 app.get("/get", (req, res) => {
   getBooks((err, result) => {
@@ -113,5 +109,11 @@ app.post("/login", (req, res) => {
     }
   });
 });
+
+app.use(express.static(path.resolve(__dirname, '..',  "build")))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname,  '..', 'public', 'index.html'))
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
